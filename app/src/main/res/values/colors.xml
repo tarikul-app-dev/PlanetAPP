@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#34495e</color>
+    <color name="colorPrimaryDark">#34495e</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="btn_color">#34495e</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorOverlay">#cc3F51B5</color>
+    <color name="cell_background_color">#ffffff</color>
+
+    <color name="color_dashboard">#FFAB40</color>
+    <color name="color_sms">#2E7D32</color>
+    <color name="color_voice">#9C27B0</color>
+    <color name="color_email">#546E7A</color>
+    <color name="color_people">#66BB6A</color>
+    <color name="color_report">#4267B2</color>
+    <color name="color_accounts">#4E5975</color>
+    <color name="color_profile">#8D3F7B</color>
+    <color name="color_top_up">#265A88</color>
+    <color name="color_tools">#0366D6</color>
+
+    <color name="color_sms_length">#34495E</color>
+    <color name="color_bijoy_unicode">#14B2EF</color>
+    <color name="color_contact_us">#388E3C</color>
+</resources>

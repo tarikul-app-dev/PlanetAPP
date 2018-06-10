@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="limited.it.planet.smsapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_planet"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_planet"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="" />
+        <activity android:name=".activity.SMSDashboard" />
+        <activity
+            android:name=".activity.SMSDashboardActivity"
+            android:label="" />
+        <activity
+            android:name=".activity.MyAccountActivity"
+            android:label="" />
+        <activity
+            android:name=".activity.MyProfileActivity"
+            android:label="" />
+        <activity
+            android:name=".activity.SMSLengthCheckerActivity"
+            android:label="" />
+        <activity android:name=".activity.EMailDashboardActivity" />
+        <activity android:name=".activity.VoiceAllCampActivity" />
+        <activity android:name=".activity.AllReportActivity" />
+        <activity android:name=".activity.PeopleActivity" />
+        <activity android:name=".activity.EmailDashboard" />
+        <activity android:name=".activity.NewEmailCampActivity" />
+        <activity android:name=".activity.AllCampaignActivity" />
+        <activity android:name=".activity.NewCampActivity" />
+        <activity android:name=".activity.AccountDashboard" />
+        <activity android:name=".activity.AllAccountsActivity" />
+        <activity android:name=".activity.ReportDashboard" />
+        <activity android:name=".activity.LogsReportActivity" />
+        <activity android:name=".activity.MainActivity" android:label=""/>
+        <activity android:name=".activity.DashboardActivity" />
+        <activity android:name=".activity.VoiceDashboard" />
+        <activity android:name=".activity.NewVoiceCampActivity" />
+        <activity
+            android:name=".activity.BuyCreditActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.ToolsDashboard" />
+        <activity android:name=".activity.BijoyToUniActivity" />
+        <activity android:name=".activity.ContactActivity" />
+    </application>
+
+</manifest>
