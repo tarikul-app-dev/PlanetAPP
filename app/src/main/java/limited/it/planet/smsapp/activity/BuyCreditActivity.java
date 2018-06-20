@@ -101,7 +101,11 @@ public class BuyCreditActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(edtUserName.getText().toString().isEmpty()){
+                    Toast.makeText(BuyCreditActivity.this, "You must give user name and Transaction Id", Toast.LENGTH_SHORT).show();
+                    return;
 
+                }
                 if(getUser.equals("1")){
                     userName = edtUserName.getText().toString();
                     String bKashTrxID = edtBTrans.getText().toString();

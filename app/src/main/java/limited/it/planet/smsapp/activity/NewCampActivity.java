@@ -1,15 +1,19 @@
 package limited.it.planet.smsapp.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.PermissionRequest;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -49,6 +55,12 @@ public class NewCampActivity extends DemoActivity {
     FontCustomization fontCustomization;
 
     SessionClear sessionClear;
+    WebSettings webSettings ;
+
+    private final static int FCR = 1;
+    private ValueCallback<Uri[]> mUMA;
+    private String mCM;
+    private ValueCallback<Uri> mUM;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -79,9 +91,16 @@ public class NewCampActivity extends DemoActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void initViews(){
+        webView = (WebView) findViewById(R.id.webview);
+        webSettings = webView.getSettings();
+        if (Build.VERSION.SDK_INT >= 23 && (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(NewCampActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
+        }
+        assert webView != null;
+
 
         sessionClear = new SessionClear(NewCampActivity.this);
-        webView = (WebView) findViewById(R.id.webview);
+
         txvHeadlineToolbar = (TextView)findViewById(R.id.txv_toolbar_head);
         fontCustomization = new FontCustomization(NewCampActivity.this);
 
@@ -92,63 +111,98 @@ public class NewCampActivity extends DemoActivity {
         txvHeadlineToolbar.setTypeface(fontCustomization.getTexgyreHerosBold());
 
 
-//        progressBar = ProgressDialog.show(NewCampActivity.this,
-//                getString(R.string.progress_please_wait), getString(R.string.progress_loading));
-//        progressBar.setCancelable(true);
+        if (Build.VERSION.SDK_INT >= 23 && (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(NewCampActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
+        }
+        assert webView != null;
 
-        loadNewCampaignsWebView();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void loadNewCampaignsWebView(){
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.getSettings().setAllowFileAccessFromFileURLs(true);
-        webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-        webView.clearCache(true);
-        webView.clearHistory();
-        webView.getSettings().setAllowContentAccess(true);
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setJavaScriptEnabled(true); // enable javascript
-        webView.getSettings().setBuiltInZoomControls(true);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setAllowFileAccess(true);
         webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setLoadWithOverviewMode(true);
-        //webView.getSettings().setUseWideViewPort(true);
-
         webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setDisplayZoomControls(false);
+        if (Build.VERSION.SDK_INT >= 21) {
+            webSettings.setMixedContentMode(0);
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else if (Build.VERSION.SDK_INT < 19) {
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
 
-        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        webView.setScrollbarFadingEnabled(false);
-        webView.setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // Log.i(TAG, "Processing webview url click...");
-                view.loadUrl(url);
+        webView.setWebViewClient(new Callback());
+        //webView.loadUrl("https://infeeds.com/");
+        webView.loadUrl("http://client.planetgroupbd.com/sms/create-campaign");
+        webView.setWebChromeClient(new WebChromeClient() {
+
+            //For Android 3.0+
+            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
+
+                mUM = uploadMsg;
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("*/*");
+                NewCampActivity.this.startActivityForResult(Intent.createChooser(i, "File Chooser"), FCR);
+            }
+
+            // For Android 3.0+, above method not supported in some android 3+ versions, in such case we use this
+            public void openFileChooser(ValueCallback uploadMsg, String acceptType) {
+
+                mUM = uploadMsg;
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("*/*");
+                NewCampActivity.this.startActivityForResult(
+                        Intent.createChooser(i, "File Browser"),
+                        FCR);
+            }
+
+            //For Android 4.1+
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
+
+                mUM = uploadMsg;
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("*/*");
+                NewCampActivity.this.startActivityForResult(Intent.createChooser(i, "File Chooser"), NewCampActivity.FCR);
+            }
+
+            //For Android 5.0+
+            public boolean onShowFileChooser(
+                    WebView webView, ValueCallback<Uri[]> filePathCallback,
+                    WebChromeClient.FileChooserParams fileChooserParams) {
+
+                if (mUMA != null) {
+                    mUMA.onReceiveValue(null);
+                }
+
+                mUMA = filePathCallback;
+                // Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+
+                Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                contentSelectionIntent.setType("*/*");
+//                Intent[] intentArray;
+//
+//                if (takePictureIntent != null) {
+//                    intentArray = new Intent[]{takePictureIntent};
+//                } else {
+//                    intentArray = new Intent[0];
+//                }
+
+                Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+                chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
+                // chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
+                // chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+                startActivityForResult(chooserIntent, FCR);
+
                 return true;
             }
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-              //  progressBar.isShowing();
-                Log.d(TAG_PRO, "progressbar ------>"+"start");
-                startProgress();
-            }
-            public void onPageFinished(WebView view, String url) {
-
-//                if (progressBar.isShowing()) {
-//                    //txvHeadlineToolbar.setText("Campaigns");
-//                    progressBar.dismiss();
-//                    Log.d(TAG_PRO, "progressbar ------>"+"finish");
-//
-//                }
-            }
-
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                // Log.e(TAG, "Error: " + description);
-                view.loadData("<html>!Your Device is Offline.Please Connect Internet.</html>", "", "");
-            }
         });
-        webView.loadUrl(newCampaignAPI);
+
     }
+
 
     //menu option
     @Override
@@ -217,9 +271,9 @@ public class NewCampActivity extends DemoActivity {
         }, 5000);
 
     }
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        sessionClear.clearSessionWhenPause();
-//    }
+    public class Callback extends WebViewClient {
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            Toast.makeText(getApplicationContext(), "Failed loading app!", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
