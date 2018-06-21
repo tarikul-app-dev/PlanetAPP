@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import limited.it.planet.smsapp.R;
 import limited.it.planet.smsapp.activity.AccountDashboard;
+import limited.it.planet.smsapp.activity.ContactsActivity;
 import limited.it.planet.smsapp.activity.DashboardActivity;
 import limited.it.planet.smsapp.activity.EmailDashboard;
 import limited.it.planet.smsapp.activity.MyProfileActivity;
@@ -148,6 +149,10 @@ public class ButtonAdapter extends BaseAdapter {
                     Intent intent = new Intent(mContext,ToolsDashboard.class);
                     mContext.startActivity(intent);
                    // ((Activity)mContext).finish();
+                }else if(position==10){
+                    Intent intent = new Intent(mContext,ContactsActivity.class);
+                    mContext.startActivity(intent);
+                    // ((Activity)mContext).finish();
                 }
             }
         });

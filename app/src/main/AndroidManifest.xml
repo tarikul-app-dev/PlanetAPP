@@ -5,8 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission  android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
         android:allowBackup="true"
@@ -50,7 +51,9 @@
         <activity android:name=".activity.AllAccountsActivity" />
         <activity android:name=".activity.ReportDashboard" />
         <activity android:name=".activity.LogsReportActivity" />
-        <activity android:name=".activity.MainActivity" android:label=""/>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="" />
         <activity android:name=".activity.DashboardActivity" />
         <activity android:name=".activity.VoiceDashboard" />
         <activity android:name=".activity.NewVoiceCampActivity" />
@@ -60,6 +63,7 @@
         <activity android:name=".activity.ToolsDashboard" />
         <activity android:name=".activity.BijoyToUniActivity" />
         <activity android:name=".activity.ContactActivity" />
+        <activity android:name=".activity.ContactsActivity"></activity>
     </application>
 
 </manifest>
