@@ -46,7 +46,7 @@
         <activity android:name=".activity.EmailDashboard" />
         <activity android:name=".activity.NewEmailCampActivity" />
         <activity android:name=".activity.AllCampaignActivity" />
-        <activity android:name=".activity.NewCampActivity" />
+        <activity android:name=".activity.NewCampActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.AccountDashboard" />
         <activity android:name=".activity.AllAccountsActivity" />
         <activity android:name=".activity.ReportDashboard" />
