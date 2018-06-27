@@ -62,6 +62,25 @@ public class AllReportActivity extends DemoActivity {
         setSupportActionBar(toolbar);
         initializeUI();
 
+        if (savedInstanceState == null) {
+            webView.loadUrl(reportAPICall);
+        }
+
+    }
+
+    //To Prevent Webview load when rotate
+    @Override
+    protected void onSaveInstanceState(Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        webView.saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        webView.restoreState(savedInstanceState);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

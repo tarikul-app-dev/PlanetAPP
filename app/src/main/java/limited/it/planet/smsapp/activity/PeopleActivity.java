@@ -61,7 +61,23 @@ public class PeopleActivity extends DemoActivity {
         setSupportActionBar(toolbar);
         initializeUI();
 
+        if (savedInstanceState == null) {
+            webView.loadUrl(peopleAPICall);
+        }
+    }
+    //To Prevent Webview load when rotate
+    @Override
+    protected void onSaveInstanceState(Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        webView.saveState(outState);
+    }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        webView.restoreState(savedInstanceState);
     }
 
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import limited.it.planet.smsapp.R;
 import limited.it.planet.smsapp.activity.BijoyToUniActivity;
 import limited.it.planet.smsapp.activity.ContactActivity;
+import limited.it.planet.smsapp.activity.ContactsActivity;
 import limited.it.planet.smsapp.activity.SMSLengthCheckerActivity;
 import limited.it.planet.smsapp.util.FontCustomization;
 
@@ -104,6 +105,10 @@ public class ToolsButtonAdapter extends BaseAdapter {
                     Intent intent = new Intent(mContext,ContactActivity.class);
                     mContext.startActivity(intent);
                   //  ((Activity)mContext).finish();
+                }else if(position==3){
+                    Intent intent = new Intent(mContext,ContactsActivity.class);
+                    mContext.startActivity(intent);
+                    // ((Activity)mContext).finish();
                 }
             }
         });

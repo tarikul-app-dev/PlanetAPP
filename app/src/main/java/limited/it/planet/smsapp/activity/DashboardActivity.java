@@ -85,7 +85,24 @@ public class DashboardActivity extends DemoActivity {
 
         cookieValueList = new ArrayList();
         loadDashboardWebView();
+        if (savedInstanceState == null) {
+            webView.loadUrl(mainLoginAPI);
+        }
 
+    }
+    //To Prevent Webview load when rotate
+    @Override
+    protected void onSaveInstanceState(Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        webView.saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        webView.restoreState(savedInstanceState);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

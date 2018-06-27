@@ -21,5 +21,6 @@
 
     <color name="color_sms_length">#34495E</color>
     <color name="color_bijoy_unicode">#14B2EF</color>
-    <color name="color_contact_us">#388E3C</color>
+    <color name="color_contact_us">#009688</color>
+    <color name="color_export_contact">#cc3F51B5</color>
 </resources>

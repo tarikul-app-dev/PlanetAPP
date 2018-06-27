@@ -66,9 +66,28 @@ public class EMailDashboardActivity extends DemoActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar_email_activity);
         setSupportActionBar(toolbar);
         initializeUI();
-
+        if (savedInstanceState == null) {
+            webView.loadUrl(emailDashboard);
+        }
 
     }
+
+    //To Prevent Webview load when rotate
+    @Override
+    protected void onSaveInstanceState(Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        webView.saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        webView.restoreState(savedInstanceState);
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void initializeUI(){
 

@@ -91,15 +91,28 @@ public class MyAccountActivity extends DemoActivity {
         }
 
 
-
-//        progressBar = ProgressDialog.show(MyAccountActivity.this,
-//                getString(R.string.progress_please_wait), getString(R.string.progress_loading));
-//        progressBar.setCancelable(true);
-
         loadMyAccountWebView();
-
+        if (savedInstanceState == null) {
+            webView.loadUrl(myAccountAPI);
+        }
 
     }
+
+    //To Prevent Webview load when rotate
+    @Override
+    protected void onSaveInstanceState(Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        webView.saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        webView.restoreState(savedInstanceState);
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void loadMyAccountWebView(){

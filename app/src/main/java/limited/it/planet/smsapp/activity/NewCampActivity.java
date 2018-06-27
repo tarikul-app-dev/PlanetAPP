@@ -87,6 +87,23 @@ public class NewCampActivity extends DemoActivity {
         });
 
         initViews();
+        if (savedInstanceState == null) {
+            webView.loadUrl(newCampaignAPI);
+        }
+    }
+    //To Prevent Webview load when rotate
+    @Override
+    protected void onSaveInstanceState(Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        webView.saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        webView.restoreState(savedInstanceState);
     }
 
 
@@ -124,7 +141,7 @@ public class NewCampActivity extends DemoActivity {
         webSettings.setAllowFileAccess(true);
         webView.getSettings().setSupportZoom(true);
        // webView.getSettings().setBuiltInZoomControls(true);
-
+        webView.requestFocus(View.FOCUS_DOWN);
 
         if (Build.VERSION.SDK_INT >= 21) {
             webSettings.setMixedContentMode(0);

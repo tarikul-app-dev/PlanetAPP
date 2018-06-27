@@ -42,6 +42,7 @@ public class SMSDashboard extends AppCompatActivity {
         initViews();
     }
 
+
     public void initViews(){
 
         sessionClear = new SessionClear(SMSDashboard.this);

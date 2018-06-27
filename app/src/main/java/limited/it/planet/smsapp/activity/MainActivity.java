@@ -58,11 +58,11 @@ public class MainActivity extends AppCompatActivity implements ButtonAdapter.Gri
             "Account",
             "Profile",
             "Buy Credit",
-            "Tools",
-            "Contacts"
+            "Tools"
+
     };
-    public Drawable[] drawables = new Drawable[11];
-    public int colors[] = new int[11];
+    public Drawable[] drawables = new Drawable[10];
+    public int colors[] = new int[10];
 
 
 
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements ButtonAdapter.Gri
         drawables[7] = this.getResources().getDrawable(R.drawable.ic_profile);
         drawables[8] = this.getResources().getDrawable(R.drawable.ic_top_up);
         drawables[9] = this.getResources().getDrawable(R.drawable.ic_settings);
-        drawables[10] = this.getResources().getDrawable(R.drawable.ic_settings);
+
 
         colors[0] = ContextCompat.getColor(MainActivity.this, R.color.color_dashboard);
         colors[1] =ContextCompat.getColor(MainActivity.this, R.color.color_sms);
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements ButtonAdapter.Gri
         colors[7] =  ContextCompat.getColor(MainActivity.this, R.color.color_profile);
         colors[8] =  ContextCompat.getColor(MainActivity.this, R.color.color_top_up);
         colors[9] =  ContextCompat.getColor(MainActivity.this, R.color.color_tools);
-        colors[10] =  ContextCompat.getColor(MainActivity.this, R.color.color_tools);
+
 
         btnGridView.setAdapter(new ButtonAdapter(MainActivity.this,filesnames,this,drawables,colors));
 
@@ -210,10 +210,6 @@ public class MainActivity extends AppCompatActivity implements ButtonAdapter.Gri
              Intent intent = new Intent(MainActivity.this,ToolsDashboard.class);
              startActivity(intent);
            //  ActivityCompat.finishAffinity(MainActivity.this);
-         }else if(position==10){
-             Intent intent = new Intent(MainActivity.this,ContactsActivity.class);
-             startActivity(intent);
-             //  ActivityCompat.finishAffinity(MainActivity.this);
          }
     }
 }

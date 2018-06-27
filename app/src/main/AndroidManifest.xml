@@ -25,38 +25,38 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:label="" />
-        <activity android:name=".activity.SMSDashboard" />
+            android:label="" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".activity.SMSDashboard"   />
         <activity
             android:name=".activity.SMSDashboardActivity"
-            android:label="" />
+            android:label="" android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".activity.MyAccountActivity"
-            android:label="" />
+            android:label="" android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".activity.MyProfileActivity"
-            android:label="" />
+            android:label="" android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".activity.SMSLengthCheckerActivity"
             android:label="" />
-        <activity android:name=".activity.EMailDashboardActivity" />
-        <activity android:name=".activity.VoiceAllCampActivity" />
-        <activity android:name=".activity.AllReportActivity" />
-        <activity android:name=".activity.PeopleActivity" />
+        <activity android:name=".activity.EMailDashboardActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".activity.VoiceAllCampActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".activity.AllReportActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".activity.PeopleActivity" android:configChanges="orientation|screenSize"/>
         <activity android:name=".activity.EmailDashboard" />
-        <activity android:name=".activity.NewEmailCampActivity" />
-        <activity android:name=".activity.AllCampaignActivity" />
-        <activity android:name=".activity.NewCampActivity" android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.NewEmailCampActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".activity.AllCampaignActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".activity.NewCampActivity" android:windowSoftInputMode="adjustPan" android:configChanges="orientation|screenSize"/>
         <activity android:name=".activity.AccountDashboard" />
-        <activity android:name=".activity.AllAccountsActivity" />
+        <activity android:name=".activity.AllAccountsActivity" android:configChanges="orientation|screenSize"/>
         <activity android:name=".activity.ReportDashboard" />
-        <activity android:name=".activity.LogsReportActivity" />
+        <activity android:name=".activity.LogsReportActivity" android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".activity.MainActivity"
             android:label="" />
-        <activity android:name=".activity.DashboardActivity" />
+        <activity android:name=".activity.DashboardActivity" android:configChanges="orientation|screenSize"/>
         <activity android:name=".activity.VoiceDashboard" />
-        <activity android:name=".activity.NewVoiceCampActivity" />
+        <activity android:name=".activity.NewVoiceCampActivity" android:configChanges="orientation|screenSize" />
         <activity
             android:name=".activity.BuyCreditActivity"
             android:windowSoftInputMode="stateHidden" />

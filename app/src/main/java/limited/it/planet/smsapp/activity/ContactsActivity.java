@@ -1,7 +1,12 @@
 package limited.it.planet.smsapp.activity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -10,6 +15,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
@@ -43,8 +49,14 @@ public class ContactsActivity extends AppCompatActivity {
     int counter;
     String name = "";
     String phoneNumber = "";
-    Button btnSelectAll,btnUnselect;
+    Button btnExContacts;
     ContactsAdapter adapter;
+
+    //Delimiter used in CSV file
+    private static final String COMMA_DELIMITER = ",";
+    private static final String NEW_LINE_SEPARATOR = "\n";
+    FileWriter fileWriter = null;
+    public static final int REQUEST_PERM_WRITE_STORAGE = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +65,8 @@ public class ContactsActivity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar_contacts_activity);
         setSupportActionBar(toolbar);
         imgvHome = (ImageView)findViewById(R.id.imgv_home);
-        btnSelectAll = (Button)findViewById(R.id.btn_select_all);
-        btnUnselect = (Button)findViewById(R.id.btn_unSelect_all);
+        btnExContacts = (Button)findViewById(R.id.btn_ex_contacts);
+       // btnUnselect = (Button)findViewById(R.id.btn_unSelect_all);
 
         imgvHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,27 +108,74 @@ public class ContactsActivity extends AppCompatActivity {
             }
         });
 
-        btnSelectAll.setOnClickListener(new View.OnClickListener() {
+        btnExContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(ContactModel contacts:contactList){
-                    contacts.setChecked(true);
-                }
-                adapter.notifyDataSetChanged();
-            }
-        });
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(),
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+
+                    ActivityCompat.requestPermissions(ContactsActivity.this,
+                            new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERM_WRITE_STORAGE);
+
+                } else{
+                    String filename = "allcontacts.csv";
+                    File sdCardDir = Environment.getExternalStorageDirectory();
+                    // the name of the file to export with
+
+                    File saveFile = new File(sdCardDir, filename);
+                    try {
+                        fileWriter = new FileWriter(saveFile);
+                        //Add a new line separator after the header
+
+                        fileWriter.append(NEW_LINE_SEPARATOR);
+                        for (ContactModel student : contactList) {
+                            fileWriter.append(String.valueOf(student.getContactNumber()));
+                            fileWriter.append(COMMA_DELIMITER);
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }finally {
+
+                        try {
+                            fileWriter.flush();
+                            fileWriter.close();
+                            Toast.makeText(ContactsActivity.this,"All Contacts Exported Successfully in CSV file format ", Toast.LENGTH_LONG).show();
+
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
+
+                        }
 
 
-        btnUnselect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for(ContactModel contacts:contactList){
-                    contacts.setChecked(false);
+                    }
                 }
-                adapter.notifyDataSetChanged();
+
+
+
             }
         });
-    }
+//        btnSelectAll.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                for(ContactModel contacts:contactList){
+//                    contacts.setChecked(true);
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
+
+//        btnUnselect.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                for(ContactModel contacts:contactList){
+//                    contacts.setChecked(false);
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
+   }
 
 
     private boolean mayRequestContacts() {

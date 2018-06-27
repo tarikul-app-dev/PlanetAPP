@@ -29,10 +29,11 @@ public class ToolsDashboard extends AppCompatActivity implements ToolsButtonAdap
             "Length Check",
             "Bijoy -> Unicode",
             "Contact Us",
+            "Export Contacts"
 
     };
-    public Drawable[] drawables = new Drawable[3];
-    public int colors[] = new int[3];
+    public Drawable[] drawables = new Drawable[4];
+    public int colors[] = new int[4];
     FontCustomization fontCustomization;
 
     @Override
@@ -60,11 +61,12 @@ public class ToolsDashboard extends AppCompatActivity implements ToolsButtonAdap
         drawables[0] = this.getResources().getDrawable(R.drawable.ic_sms_length);
         drawables[1] = this.getResources().getDrawable(R.drawable.ic_bijoy_to_unicode);
         drawables[2] = this.getResources().getDrawable(R.drawable.ic_contact_us);
+        drawables[3] = this.getResources().getDrawable(R.drawable.ic_settings);
 
         colors[0] = ContextCompat.getColor(ToolsDashboard.this, R.color.color_sms_length);
         colors[1] =ContextCompat.getColor(ToolsDashboard.this, R.color.color_bijoy_unicode);
         colors[2] = ContextCompat.getColor(ToolsDashboard.this, R.color.color_contact_us);
-
+        colors[3] =  ContextCompat.getColor(ToolsDashboard.this, R.color.color_export_contact);
         gvTools.setAdapter(new ToolsButtonAdapter(ToolsDashboard.this,filesnames,this,drawables,colors));
 
         fontCustomization = new FontCustomization(ToolsDashboard.this);
@@ -83,6 +85,9 @@ public class ToolsDashboard extends AppCompatActivity implements ToolsButtonAdap
             // ActivityCompat.finishAffinity(MainActivity.this);
         }else if(position==2){
             Intent intent = new Intent(ToolsDashboard.this,ContactActivity.class);
+            startActivity(intent);
+        }else if(position==3){
+            Intent intent = new Intent(ToolsDashboard.this,ContactsActivity.class);
             startActivity(intent);
         }
     }

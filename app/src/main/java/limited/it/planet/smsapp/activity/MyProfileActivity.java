@@ -72,11 +72,26 @@ public class MyProfileActivity extends DemoActivity {
         fontCustomization = new FontCustomization(MyProfileActivity.this);
         txvHeadProf.setTypeface(fontCustomization.getTexgyreHerosBold());
 
-//        progressBar = ProgressDialog.show(MyProfileActivity.this,
-//                getString(R.string.progress_please_wait), getString(R.string.progress_loading));
-//        progressBar.setCancelable(true);
 
         loadMyProfileWebView();
+
+        if (savedInstanceState == null) {
+            webView.loadUrl(myProfileAPI);
+        }
+    }
+    //To Prevent Webview load when rotate
+    @Override
+    protected void onSaveInstanceState(Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        webView.saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        webView.restoreState(savedInstanceState);
     }
 
 

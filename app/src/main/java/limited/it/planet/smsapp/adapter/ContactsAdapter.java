@@ -58,7 +58,7 @@ public class ContactsAdapter extends BaseAdapter {
             rootView = mInflater.inflate(R.layout.contact_list_item, parent, false);
             holder.contactsName = (TextView) rootView.findViewById(R.id.txv_user_name);
             holder.phoneNumber = (TextView) rootView.findViewById(R.id.txv_user_number);
-            holder.listItemCheckBox = (CheckBox)rootView.findViewById(R.id.cb_select);
+          //  holder.listItemCheckBox = (CheckBox)rootView.findViewById(R.id.cb_select);
 
             rootView.setTag(holder);
         } else {
@@ -74,7 +74,7 @@ public class ContactsAdapter extends BaseAdapter {
 
         holder.contactsName.setText(name);
         holder.phoneNumber.setText(phone);
-        holder.listItemCheckBox.setChecked(isChecked);
+       // holder.listItemCheckBox.setChecked(isChecked);
 
         return rootView;
     }
@@ -88,7 +88,7 @@ public class ContactsAdapter extends BaseAdapter {
     private static class ViewHolder {
         TextView contactsName,phoneNumber;
 
-        CheckBox listItemCheckBox;
+       // CheckBox listItemCheckBox;
     }
 
 
